@@ -1,0 +1,67 @@
+/* Set the background color to green */
+body {
+    background-color: white;
+}
+
+/* Style the form container */
+form {
+    background-color: #b0b435;
+    padding: 20px;
+    border:  solid #b0b435 ;
+    border-radius: 15%;
+    display:flex;
+    flex-direction:column;
+    width: 50%;
+    padding:5%; 
+    /* White border at the bottom */
+}
+
+/* Set text color to white */
+label, input, textarea, select, button {
+    color: white;
+    margin: 1%;
+}
+input,textarea{
+    background-color:#b0b435 ;
+    color: white; /* Set the text color to white */
+    border: none; /* Remove the default border */
+    border-bottom: 1px solid white; /* Add a white border at the bottom */
+    outline: none; /* Remove the focus outline */
+    padding: 0.5rem; /* Add some padding for better spacing */
+    font-size: 1rem; /* Set the font size */
+    /* width: 100%; Make the input span the entire width */
+}
+input::placeholder {
+    color: #ffffff; /* Set the text color to white */
+    font-style: italic; /* Optionally, make it italic */
+}
+textarea::placeholder {
+    color: #ffffff; /* Set the text color to white */
+    font-style: italic; /* Optionally, make it italic */
+}
+
+/* Style the dropdown (select) */
+select {
+    background-color: #b0b435;
+     /* Set the background color */
+    color: white; /* Set the text color */
+    border: none; /* Remove the default border */
+    border-bottom: 1px solid white; /* Add a white border at the bottom */
+    outline: none; /* Remove the focus outline */
+    padding: 0.5rem; /* Add some padding for better spacing */
+    font-size: 1rem; /* Set the font size */
+    /* width: 100%; Make the input span the entire width */
+}
+
+
+/* Set the text color inside the dropdown to white */
+option {
+    color: white;
+}
+button{
+    background-color: #b0b435;
+    margin:1%;
+    margin-left: 40%;
+    width: 25%;
+    align-items: center;
+}

@@ -1,0 +1,254 @@
+<!-- base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+{% comment %} {% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/override.css' %}">
+{% endblock %} {% endcomment %}
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}" />
+    
+        
+    
+  </head>
+  <body>
+    <header></header>
+
+    <nav>
+      <!-- Navigation links or menu can go here -->
+      
+      <!-- Start Main Top -->
+
+      <!-- Start Main Top -->
+      <header class="main-header">
+        <!-- Start Navigation -->
+        <nav
+          class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav"
+        >
+          <div class="container">
+            <!-- Start Header Navigation -->
+            <div class="navbar-header">
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbar-menu"
+                aria-controls="navbars-rs-food"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <i class="fa fa-bars"></i>
+              </button>
+              <a class="navbar-brand" href="/"
+                ><img src="/static/image/logo.png" class="logo" alt=""
+              /></a>
+            </div>
+            <!-- End Header Navigation -->
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-menu">
+              <ul
+                class="nav navbar-nav ml-auto"
+                data-in="fadeInDown"
+                data-out="fadeOutUp"
+              >
+                <li class="nav-item">
+                  <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/accounts/about/">About Us</a>
+                </li>
+                <li class="nav-item">
+                  <a  class="nav-link" href="/shop/">SHOP</a>
+                </li>
+                {% comment %} <li class="dropdown active">
+                  <a href="#" class="nav-link dropdown-toggle arrow"data-toggle="dropdown">SHOP</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/shop/">Sidebar Shop</a></li>
+                    <li><a href="/shopDetails/">Shop Detail</a></li>
+                    <li><a href="/accounts/myAccount/">My Account</a></li>
+                  </ul>
+                </li> {% endcomment %}
+                  {% if user.is_authenticated and user.is_superuser %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="/addCategory/">Add Category</a>
+                  </li>
+                {% endif %}
+                <li class="nav-item">
+                  <!-- add anything about Gallry -->
+                  {% if user.is_authenticated %}
+                      {% if Exporter.exists  %}
+                      {% csrf_token %}
+                        <a class="nav-link" href="/addProduct/">AddProduct</a>
+                      {% endif %}
+                    {% endif %}
+                  
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/accounts/contactUs/">Contact Us</a>
+                </li>
+              </ul>
+            </div>
+            <li class="nav-item dropdown">
+              {% if user.is_authenticated %}
+                  <!-- Display username and logout link if the user is authenticated -->
+                  <a class="nav-link dropdown-toggle"  id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fa fa-user"></i> {{ user.username }}
+                  </a>
+
+                  <div class="dropdown-menu" aria-labelledby="userDropdown">
+                      <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                      {% if user.is_authenticated %}
+                      {% if Exporter.exists  %}
+                      {% csrf_token %}
+                      <a href="{% url 'exporterprofile' user.id %}">My Account</a>
+                      {% else %}
+                      <a href="{% url 'importerprofile' user.id %}">My Account</a>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+              {% else %}
+                  <!-- Display login and signup links if the user is not authenticated -->
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sign Up
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="/accounts/login/">Login</a>
+                        <a class="dropdown-item" href="/accounts/signUP/">Sign Up</a>
+                    </div>
+                </li>
+              {% endif %}
+          </li>
+            <!-- /.navbar-collapse -->
+            <script>
+              $(document).ready(function(){
+                  $('.dropdown-toggle').dropdown();
+              });
+          </script>
+            <!-- Start Atribute Navigation -->
+            <div class="attr-nav">
+              <ul>
+                <li class="search">
+                  <a href="#"><i class="fa fa-search"></i></a>
+                </li>
+                <li class="side-menu">
+                  {% if user.is_authenticated %}
+                  <a href="/orders/cart/">
+                    <i class="fa fa-shopping-bag"></i>
+                    <span class="badge">3</span>
+                    <p>My Cart</p>
+                  </a>
+                  {% endif %}
+                </li>
+              </ul>
+            </div>
+            <!-- End Atribute Navigation -->
+          </div>
+          <!-- Start Side Menu -->
+          <div class="side">
+            <a href="#" class="close-side"><i class="fa fa-times"></i></a>
+            <li class="cart-box">
+              <ul class="cart-list">
+                <li>
+                  <a href="#" class="photo"
+                    ><img
+                      src="/static/image/img-pro-01.jpg"
+                      class="cart-thumb"
+                      alt=""
+                  /></a>
+                  <h6><a href="#">Delica omtantur </a></h6>
+                  <p>1x - <span class="price">$80.00</span></p>
+                </li>
+                <li>
+                  <a href="#" class="photo"
+                    ><img
+                      src="/static/image/img-pro-02.jpg"
+                      class="cart-thumb"
+                      alt=""
+                  /></a>
+                  <h6><a href="#">Omnes ocurreret</a></h6>
+                  <p>1x - <span class="price">$60.00</span></p>
+                </li>
+                <li>
+                  <a href="#" class="photo"
+                    ><img
+                      src="/static/image/img-pro-03.jpg"
+                      class="cart-thumb"
+                      alt=""
+                  /></a>
+                  <h6><a href="#">Agam facilisis</a></h6>
+                  <p>1x - <span class="price">$40.00</span></p>
+                </li>
+                <li class="total">
+                  <a href="#" class="btn btn-default hvr-hover btn-cart"
+                    >VIEW CART</a
+                  >
+                  <span class="float-right"
+                    ><strong>Total</strong>: $180.00</span
+                  >
+                </li>
+              </ul>
+            </li>
+          </div>
+          <!-- End Side Menu -->
+        </nav>
+        <!-- End Navigation -->
+      </header>
+      <!-- End Main Top -->
+
+    
+      <!-- End All Title Box -->
+      
+    </nav>
+
+    
+
+
+
+      <a href="#" id="back-to-top" title="Back to top" style="display: none">&uarr;</a>
+
+      
+    </footer>
+    <!-- ALL JS FILES -->
+    <script src="{%static 'js/jquery-3.2.1.min.js'%}"></script>
+    <script src="{%static 'js/popper.min.js'%}"></script>
+    <script src="{%static 'js/bootstrap.min.js'%}"></script>
+    <!-- ALL PLUGINS -->
+    <script src="{%static 'js/jquery.superslides.min.js'%}"></script>
+    <script src="{%static 'js/bootstrap-select.js'%}"></script>
+    <script src="{%static 'js/inewsticker.js'%}"></script>
+    <script src="{%static 'js/bootsnav.js.'%}"></script>
+    <script src="{%static 'js/images-loded.min.js'%}"></script>
+    <script src="{%static 'js/isotope.min.js'%}"></script>
+    <script src="{%static 'js/owl.carousel.min.js'%}"></script>
+    <script src="{%static 'js/baguetteBox.min.js'%}"></script>
+    <script src="{%static 'js/form-validator.min.js'%}"></script>
+    <script src="{%static 'js/contact-form-script.js'%}"></script>
+    <script src="{%static 'js/custom.js'%}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+  </body>
+</html>

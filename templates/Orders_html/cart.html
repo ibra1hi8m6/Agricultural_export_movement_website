@@ -1,0 +1,297 @@
+{% extends 'base.html' %}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<!-- Basic -->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Site Metas -->
+    <title>ThewayShop - Ecommerce Bootstrap 4 HTML Template</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+ {% comment %} {% block NavPage %}
+ 
+ {% endblock NavPage %} {% endcomment %}
+ {% block content %}
+   <!-- Start Top Search -->
+   <div class="top-search">
+    <div class="container">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+        <input type="text" class="form-control" placeholder="Search" />
+        <span class="input-group-addon close-search"
+          ><i class="fa fa-times"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+  <!-- End Top Search -->
+  <!-- Start All Title Box -->
+  <div class="all-title-box">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h2>Cart</h2>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Shop</a></li>
+            <li class="breadcrumb-item active">Cart</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Start Cart  -->
+<div class="cart-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-main table-responsive">
+                    <form id="cart-form" method="POST" action="{% url 'create_order' %}">
+                        {% csrf_token %}
+                    <table class="table">
+                        
+                        
+                            {% comment %} <form method="POST"  action="{% url 'update_property'  %}"> {% endcomment %}
+                            
+                        <thead>
+                            <tr>
+                                <th>Images</th>
+                                <th>Product Name</th>
+                                <th>Category Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cart_item in cart_items %}
+                            <tr>
+                                <td class="thumbnail-img">
+                                    <a href="#">
+                                        <!-- Display product image -->
+                                        <img class="img-fluid" src="{{ cart_item.product.mainImage.url }}" alt="{{ cart_item.product.productName }}" />
+                                    </a>
+                                </td>
+                                <td class="name-pr">
+                                    <a href="#">
+                                        <!-- Display product name -->
+                                        {{ cart_item.product.productName }}
+                                    </a>
+                                </td>
+                                <td class="price-pr">
+                                    <!-- Display category name -->
+                                    <p>{{ cart_item.product.category.categoryName }}</p>
+                                </td>
+                                <td class="price-pr">
+                                    <!-- Display product price -->
+                                    <p>${{ cart_item.product.price }}</p>
+                                </td>
+                                <td class="quantity-box">
+                                    <!-- Add ID to input field -->
+                                    <input type="number" size="4" value="{{ cart_item.quantity }}" min="0" step="10" class="c-input-text qty text" data-price="{{ cart_item.product.price }}">
+                                </td>
+                                <td class="total-pr">
+                                    
+                                <p><span class="total-price">$ {{ cart_item.product.price }}</span></p>
+
+                                </td>
+                                <td class="remove-pr">
+                                    <a href="/orders/cart/delete/{{ cart_item.id }}/" class="delete-cart-item">
+                                        <i class="fas fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        
+                        
+                    
+                    </table>
+                    <button type="submit">Checkout</button>
+                </form >
+                </div>
+            </div>
+        </div>
+        <!-- Rest of your cart HTML -->
+    </div>
+</div>
+<!-- End Cart -->
+
+
+{% comment %} <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to calculate total price
+        function calculateTotalPrice() {
+            const quantityInputs = document.querySelectorAll('.quantity-box input');
+            
+            quantityInputs.forEach(function(input) {
+                const quantity = parseInt(input.value);
+                const price = parseFloat(input.dataset.price);
+                const totalPriceElement = input.parentElement.nextElementSibling.querySelector('.total-price');
+                const newTotalPrice = price * quantity;
+                totalPriceElement.textContent = '$' + newTotalPrice.toFixed(2);
+            });
+        }
+    
+        // Call calculateTotalPrice initially
+        calculateTotalPrice();
+    
+        // Add event listener to quantity inputs for dynamic update
+        document.querySelectorAll('.quantity-box input').forEach(function(input) {
+            input.addEventListener('input', calculateTotalPrice);
+        });
+    });
+    
+    
+</script> {% endcomment %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to calculate total price
+        function calculateTotalPrice() {
+            const quantityInputs = document.querySelectorAll('.quantity-box input');
+            
+            quantityInputs.forEach(function(input) {
+                const quantity = parseInt(input.value);
+                const price = parseFloat(input.dataset.price);
+                const totalPriceElement = input.parentElement.nextElementSibling.querySelector('.total-price');
+                const newTotalPrice = price * quantity;
+                totalPriceElement.textContent = '$' + newTotalPrice.toFixed(2);
+            });
+        }
+    
+        // Call calculateTotalPrice initially
+        calculateTotalPrice();
+    
+        // Add event listener to quantity inputs for dynamic update
+        document.querySelectorAll('.quantity-box input').forEach(function(input) {
+            input.addEventListener('input', calculateTotalPrice);
+        });
+    })
+</script>
+
+
+  
+
+
+    <!-- Start Instagram Feed  -->
+    <div class="instagram-box">
+        <div class="main-instagram owl-carousel owl-theme">
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img src="/static/image/instagram-img-01.jpg" alt="" />
+                    <div class="hov-in">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img src="/static/image/instagram-img-02.jpg" alt="" />
+                    <div class="hov-in">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img src="/static/image/instagram-img-03.jpg" alt="" />
+                    <div class="hov-in">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img src="/static/image/instagram-img-04.jpg" alt="" />
+                    <div class="hov-in">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img src="/static/image/instagram-img-05.jpg" alt="" />
+                    <div class="hov-in">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img src="/static/image/instagram-img-06.jpg" alt="" />
+                    <div class="hov-in">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img src="/static/image/instagram-img-07.jpg" alt="" />
+                    <div class="hov-in">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img src="/static/image/instagram-img-08.jpg" alt="" />
+                    <div class="hov-in">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img src="/static/image/instagram-img-09.jpg" alt="" />
+                    <div class="hov-in">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img src="/static/image/instagram-img-05.jpg" alt="" />
+                    <div class="hov-in">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{%static 'js/addcart.js'%}"></script>
+    <!-- End Instagram Feed  -->
+    {% endblock content %}
+
+{% comment %} {% block footerPage %}
+{% endblock footerPage %} {% endcomment %}
+
+    <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+
+</body>
+
+</html>
+

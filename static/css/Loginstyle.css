@@ -1,0 +1,138 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.container {
+  align-items: center;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+  .header img {
+      width: 300px;
+      margin-left: 50px;
+  }
+
+h1 {
+  margin-left: 130px;
+  font-size: 24px;
+}
+
+.form-container {
+  text-align: center;
+}
+
+h2 {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="password"] {
+  background-image: url("../image/login/PASS.jpg");
+  background-repeat: no-repeat;
+  background-color: #d6d896;
+  padding-top: 5px;
+  width: 80%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 16px;
+}
+input[type="text"] {
+  background-image: url("../image/login/EMAIL.jpg");
+  padding-top: 5px;
+  background-repeat: no-repeat;
+  background-color: #d6d896;
+  width: 80%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+::placeholder{
+  color: #000;
+}
+#username{
+  padding-left: 45px;
+}
+#password{
+  padding-left: 45px;
+}
+.forgot-password {
+  margin-bottom: 15px;
+  font-size: 13px;
+  color: #000;
+  text-align: right;
+}
+
+  .forgot-password a {
+      color: #000;
+  }
+
+
+button {
+  background-color: #b0b436;
+  color: black;
+  padding: 10px 100px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+  button:hover {
+      background-color: #EEE4B1;
+  }
+
+p {
+  margin-top: 15px;
+}
+
+  p a {
+      color: BLACK;
+  }
+
+.social-login {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.messages {
+  
+  font-weight: bold;
+  
+  color: black;
+  padding: 2%;
+  border-radius: 12px;
+  background: red;
+}
+.messages p {
+  
+  text-align: center;
+}

@@ -1,0 +1,331 @@
+
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'css/addcategory.css' %}">
+
+  <title>Add Category/Add Products</title>
+</head>
+
+<body class="special-body">
+    {%include 'navbar.html'%}
+    <div id="center">
+<div class="containers special-container" id= "containers" >
+    <div class="form-container sign-up-container special-container" id="signUpContainer">
+        <form class="special-form" method="post">
+        {% csrf_token %}
+        <label for="category">Category:</label>
+                    <select id="category" name="category" class="form-control">
+                        <option value="" default>Select Category</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">
+                                {{ category.categoryName }}
+                            </option>
+                        {% endfor %}
+                    </select>
+        <label for="typesNames">Products Names:</label>
+        <input type="text" id="typesNames" name="typesNames" class="special-input" required multiple>
+        <button type="submit" class="special-button">Modify Category</button>
+        </form>
+    </div>
+    <div class="form-container sign-in-container special-container" id="signInContainer">
+        <form class="special-form" action="#" method="post">
+        {% csrf_token %}
+        <label for="categoryName">Category Name:</label>
+        <input type="text" id="categoryName" name="categoryName" class="special-input" required>
+        <label for="categoryImage">Category Image URL:</label>
+        <input type="file" id="categoryImage" name="categoryImage"  required>
+
+        <!-- Display selected image -->
+        <img id="selectedImage" src="" alt="Selected Category Image" style="max-width: 100%; height: auto; display: none;">
+        <label for="typesNames">Products Names (comma-separated):</label>
+                <input type="text" id="typesNames" name="typesNames" required>
+
+        <button type="submit" class="special-button">Add Category</button>
+        </form>
+        <script>
+        document.getElementById('categoryImage').addEventListener('change', function () {
+            var input = this;
+            var imgElement = document.getElementById('selectedImage');
+    
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+    
+                reader.onload = function (e) {
+                    imgElement.src = e.target.result;
+                    imgElement.style.display = 'block';
+                };
+    
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                // Hide the image if no file is selected
+                imgElement.src = '';
+                imgElement.style.display = 'none';
+            }
+        });
+        </script>
+    </div>
+            <div class="overlay-container special-container" id="overlayContainer">
+                <div class="overlay special-overlay" id="overlay">
+                <div class="overlay-panel overlay-left special-overlay-left" id="overlayLeft">
+                    <h1 class="special-h1">Add category</h1>
+                    <p class="special-p">If you want to add new category</p>
+                    <button class="ghost special-button" id="signIn">Press here</button>
+                </div>
+                <div class="overlay-panel overlay-right special-overlay-right" id="overlayRight">
+                    <h1 class="special-h1">Add product</h1>
+                    <p class="special-p">If you want to add new product for your category</p>
+                    <button class="ghost special-button" id="signUp">Press here</button>
+                </div>
+                </div>
+            </div>
+</div>
+</div>
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+ 
+  {% comment %} <style>
+
+    @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+.special-body {
+    background: #f6f5f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
+    height: 50%;
+    
+}
+
+.special-h1 {
+    font-weight: bold;
+    margin: 0;
+}
+
+.special-p {
+    font-size: 14px;
+    font-weight: 100;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    margin: 20px 0 30px;
+    width: 85%;
+}
+
+.special-a {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
+}
+
+.special-button {
+    border-radius: 20px;
+    border: 1px solid #b0b435;
+    background-color: #b0b435;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+}
+
+.special-button:active {
+    transform: scale(0.95);
+}
+
+.special-button:focus {
+    outline: none;
+}
+
+.ghost.special-button {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+    font-size: 13px;
+    color: #000000;
+}
+
+.special-form {
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+}
+
+.special-input {
+    background-color: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+}
+
+.special-container {
+    background-color: #fff;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+}
+
+#signUpContainer.special-container,
+#signInContainer.special-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+.special-container.right-panel-active #signUPContainer {
+    transform: translateX(105%);
+}
+
+.special-container.right-panel-active #signInContainer {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: show 0.6s;
+}
+
+@keyframes show {
+    0%, 49.99% {
+        opacity: 0;
+        z-index: 1;
+    }
+    
+    50%, 100% {
+        opacity: 1;
+        z-index: 5;
+    }
+}
+
+#overlayContainer.special-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 100;
+}
+
+.special-container.right-panel-active #overlayContainer{
+    transform: translateX(-100%);
+}
+
+#overlay.special-overlay {
+    background: #b0b435;
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 0;
+    color: #FFFFFF;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+}
+
+.special-container.right-panel-active #overlay {
+    transform: translateX(50%);
+}
+
+.special-overlay-left {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+}
+
+.special-overlay-left {
+    transform: translateX(-20%);
+}
+
+.special-container.right-panel-active .special-overlay-left {
+    transform: translateX(0);
+}
+
+.special-overlay-right {
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 45%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+}
+
+.special-container.right-panel-active .special-overlay-right {
+    transform: translateX(20%);
+}
+
+  </style> {% endcomment %}
+  {% comment %} <script>
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('container');
+
+    signUpButton.addEventListener('click', () => {
+      container.classList.add("right-panel-active");
+    });
+
+    signInButton.addEventListener('click', () => {
+      container.classList.remove("right-panel-active");
+    });
+  </script> {% endcomment %}
+
+  {%include 'footer.html'%}
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script src="{%static 'js/addcategory.js'%}"></script>
+      <!-- Script for initializing Bootstrap dropdown -->
+      <script>
+        $(document).ready(function(){
+            $('.dropdown-toggle').dropdown();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+{%load static%}
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login & Registration Form</title>
+  <!---Custom CSS File-->
+  <link rel="stylesheet" href="{% static 'css/Signupstyle.css' %}">
+</head>
+<body>
+  <a class="navbar-brand" href="/"
+  ><img src="/static/image/logo.png" class="logo" alt=""
+/></a>
+  <div class="container">
+    <div class="registration_form">
+      <header>Signup</header>
+      <form  method="POST">
+        {% csrf_token %}
+        <div class="datainsert">
+        <div class="Lside" >
+          <input type="text" id="username" name = "username" placeholder="Enter your username">
+          <input type="text" id="fname" name = "fname" placeholder="Enter your First Name">
+          <input type="text" id="lname" name = "lname" placeholder="Enter your Last Name">
+          <label for="User_Types">User Types:</label>
+          <select id="Types" name="Types">
+            <option value="Exporter">Exporter</option>
+            <option value="Importer">Importer</option>
+            
+          </select>
+        </div>
+        <div  class="Rside">
+        <input type="email"  id="email" name = "email"  placeholder="Enter your email">
+        <input type="tel"  id="phone" name = "phone"  placeholder="Enter your Phone Number">
+        <input type="password"  id="pass1" name = "pass1"  placeholder="Create a password">
+        <input type="password"  id="pass2" name = "pass2"  placeholder="Confirm your password">
+      </div>
+    </div>
+        <!-- <input type="button" class="button" value="Signup"> -->
+        <button type="submit" class="button">Sign Up</button>
+      </form>
+      {% if messages %}
+						
+									<div class="messages">
+										{% for message in messages %}
+										<p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+										{% endfor %}
+									</div>
+									{% endif %}
+      <div class="signup">
+        <span class="signup">Already have an account?
+        <a href= "/accounts/login/">Login</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

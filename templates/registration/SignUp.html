@@ -1,0 +1,104 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Shop Sign In</title>
+    <link rel="stylesheet" href="{% static 'css/Signupstyle.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="{% static 'image/signup/logo.png'%}" alt="Fresh Shop Logo">
+        </div>
+        <div class="form-container">
+            <h2>Create Account</h2>
+            <form  method="POST">
+                {% csrf_token %}
+                <a href="#">
+                    <img src="{% static 'image/signup/facebook.png'%}" alt="Facebook Login">
+                </a>
+                <a href="#">
+                    <img src="{% static 'image/signup/google.png'%}" alt="Google Login">
+                </a>
+                <p> or use Email account</p>
+                <div class="container1">
+                    <div class="form-group">
+                        <input  type="text" name="fname" placeholder="First Name" id="fname" required>
+                    </div>
+                   
+                    <div class="form-group">
+                        <input  type="text" name="phone" placeholder="Phone" id="Phone" required>
+                    </div>
+                </div>
+                <div class="container2">
+                  <div class="form-group">
+                    <input  type="text" name="lname" placeholder="Last Name" id="email" required>
+                </div>
+                  <div class="form-group"> 
+                      <input type="username" id="Conform" placeholder="Username" name="username" required>
+                  </div>
+              </div>
+                <div class="container2">
+                    <div class="form-group"> 
+                        <input  type="email" name="email" placeholder="Email" id="email" required>
+                    </div>
+                    <div class="form-group"> 
+                        <input type="password" id="password" placeholder="Password" name="pass1" required>
+                    </div>
+                </div>
+                <div class="container2">
+                    <div class="form-group"> 
+                        <input  type="Address" name="address" placeholder="Address" id="Address" required>
+                    </div>
+                    <div class="form-group"> 
+                        <input type="password" id="Conform" placeholder="Confirm password" name="pass2" required>
+                    </div>
+                </div>
+                
+                <div class="container3">
+                    <div class="form-group"> 
+                        <input  type="Tax card" name="Tax card" placeholder="Tax card" id="Tax-card" required>
+                    </div>
+                    <div class="form-group"> 
+                        <input type="comm" id="comm" placeholder="Commercial Register " name="comm" required>
+                    </div>
+                </div>
+                    <!--
+                    <div class="form-group"> 
+                        <input  type="email" name="email" placeholder="Email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group"> 
+                        <input type="password" id="password" placeholder="Password" name="password" required>
+                    </div>
+                    <div class="form-group"> 
+                        <input  type="Tax card" name="Tax card" placeholder="Tax card" id="Tax-card" required>
+                    </div>
+                    <div class="form-group"> 
+                        <input type="comm" id="comm" placeholder="Commercial Register " name="comm" required>
+                    </div>
+                    -->
+                
+                <div class="checkbox-group">
+                    <p>Type:    </p>
+                    <input type="radio" id="checkbox1" name="Types" value="Importer" checked>
+                    <label for="checkbox1">Importer</label>
+                    <input type="radio" id="checkbox2" name="Types" value="Exporter">
+                    <label for="checkbox2">Exporter</label>
+             </div>
+                     <button type="submit">Sign Up</button>
+            </form>
+            <p> <a href="/accounts/login/">Already have an account?</a></p>
+                                    {% if messages %}
+									<div class="messages">
+										{% for message in messages %}
+										<p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+										{% endfor %}
+									</div>
+									{% endif %}
+        </div>
+    </div>
+</body>
+</html>
